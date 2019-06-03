@@ -1,58 +1,178 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+<div>
+    <div id="topBandImage">
+        <img src="../assets/still_unit_107731.png" />
+    </div>
+    <div class="insetContent">
+        <div id="topContent">
+            <div id="leftLogo" style="float: left;">LOGO</div>
+            <div id="rightLogo" style="float: right;">SSS</div>
+        </div>
+        <div id="mainContent">
+            <div id="mainSearchBar">
+                <input type="text-box">
+                <router-link id="submitButton" to="/res">GO</router-link>
+            </div>
+            <div id="bottomBox">
+                <div id="tabBox" class="shadowBox">
+                    <div>
+                        <div class="tabDiv" v-for="j in 5" :key="'tab'+j">{{ j }}</div>
+                    </div>
+                    <div id="tabContent">aaaaa</div>
+                </div>
+                <div id="broadBox" class="shadowBox">
+                    <span>公告</span>
+                    <div id="cvBox">
+                        <img src="../assets/still_unit_100231.png"/>
+                    </div>
+                    <ul>
+                        <li v-for="i in 5" :key="'a'+i">{{ i }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="siteFooter">
+        <div class="insetContent">
+            COPY right
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+    name: 'HelloWorld',
+    data(){
+        return {
+
+        }
+    }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#topBandImage{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    z-index: -1;
+    opacity: 0.9;
+}
+#topBandImage > img {
+    height: auto;
+}
+#siteFooter{
+    /* position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+    width: 100%;
+    height: 100px;
+    background: rgba(0,0,0,.2);
+}
+
+.insetContent{
+    width: 960px;
+    margin: 0 auto;
+}
+
+#topContent
+{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    /*background: white;*/
+}
+#leftLogo{
+    color: blue;
+    font-size: 40px;
+}
+#rightLogo{
+    color: white;
+}
+#mainContent{
+    margin-top: 150px;
+    margin-bottom: 50px;
+    height: auto;
+}
+#mainSearchBar{
+    border-radius: 20px;
+    width: 600px;
+    height: 40px;
+    background: white;
+    margin: 0 auto;
+}
+#mainSearchBar > input {
+    display: inline-block;
+    width: 500px;
+    line-height: 30px;
+}
+#submitButton {
+    display: inline-block;
+    width: 50px;
+    line-height: 40px;
+}
+#bottomBox{
+    width: 960px;
+    height: 400px;
+    margin-top: 10px;
+}
+.shadowBox{
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.4);
+}
+#tabBox{
+    display: inline-block;
+    width: 70%;
+    height: 100%;
+    vertical-align: top;
+    text-align: left;
+    background: white;
+}
+.tabDiv{
+    display: inline-block;
+    padding: 5px 10px;
+    line-height: 40px;
+    /*background: white;*/
+}
+.tabDiv:hover{
+    user-select: none;
+    color: skyblue;
+}
+#tabContent{
+    padding: 10px;
+}
+#broadBox{
+    display: inline-block;
+    width: 30%;
+    height: 100%;
+    vertical-align: top;
+
+    background: skyblue;
+}
+#cvBox{
+    height: 160px;
+    overflow: hidden;
+}
+
 h3 {
-  margin: 40px 0 0;
+    margin: 40px 0 0;
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+    display: block;
+    margin: 20px 10px;
 }
 a {
-  color: #42b983;
+    color: #42b983;
 }
 </style>
