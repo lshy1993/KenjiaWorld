@@ -9,6 +9,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'navi',
+      component: ()=> import('../components/Navi.vue')
+    },
+    {
+      path: '/home',
       name: 'home',
       component: ()=> import('../components/HelloWorld.vue')
     },

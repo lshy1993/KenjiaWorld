@@ -1,12 +1,14 @@
 <template>
-<div>
+<div id="infoContent">
     <div id="topBandImage">
         <img src="../assets/still_unit_107731.png" />
     </div>
     <div class="insetContent">
         <div id="topContent">
-            <div id="leftLogo" style="float: left;">LOGO</div>
-            <div id="rightLogo" style="float: right;">SSS</div>
+            <div id="leftLogo" style="float: left;">MoeLink</div>
+            <div id="rightLogo" class="clickable" @click="userLogined?logOut():showLoginBox()">
+                <span class="naviTxt">{{ userLogined?"logout":"login" }}</span>
+            </div>
         </div>
         <div id="mainContent">
             <div id="mainSearchBar">
@@ -52,20 +54,26 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+#infoContent{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 #topBandImage{
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
     width: 100%;
     height: 50%;
     overflow: hidden;
     z-index: -1;
     opacity: 0.9;
-}
-#topBandImage > img {
-    height: auto;
+
+    img{
+        height: auto;
+    }
 }
 #siteFooter{
     /* position: fixed;
@@ -85,17 +93,20 @@ export default {
 #topContent
 {
     width: 100%;
-    height: 40px;
-    line-height: 40px;
-    /*background: white;*/
+    height: 50px;
+    line-height: 50px;
+    
+    #leftLogo{
+        color: black;
+        font-size: 48px;
+    }
+    #rightLogo{
+        color: white;
+    }
+    
+    //background: white;
 }
-#leftLogo{
-    color: blue;
-    font-size: 40px;
-}
-#rightLogo{
-    color: white;
-}
+
 #mainContent{
     margin-top: 150px;
     margin-bottom: 50px;
