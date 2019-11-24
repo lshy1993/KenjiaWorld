@@ -8,6 +8,9 @@
         <span>倒计时{{  parseInt(30-ttime/1000) }}后自动进入moelink</span>
     </div>
     <div id="mainContent">
+        <div id="danmakuBox">
+
+        </div>
         <div id="logoBox">
             <div id="logo">
                 <router-link to="/home" >MoeLink</router-link>
