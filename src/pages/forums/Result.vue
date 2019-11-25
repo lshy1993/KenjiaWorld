@@ -1,7 +1,7 @@
 <template>
 <div>
     <div id="maxBG">
-        <img src="../assets/tokyo.jpg">
+        <img src="../../assets/tokyo.jpg">
     </div>
     <header id="topBar">
         <router-link to="/" id="topLogo">LOGO</router-link>
@@ -15,7 +15,7 @@
         <div id="siteBox">
             <div>
                 <div id="siteHead">
-                    <img src="../assets/still_unit_107731.png">
+                    <img src="../../assets/still_unit_107731.png">
                 </div>
                 <div>
                     <div id="aboutBtn">关于网站</div>
@@ -23,7 +23,7 @@
                 </div>
                 <div id="iconWrap">
                     <div id="icon">
-                        <img src="../assets/logo.png" />
+                        <img src="../../assets/logo.png" />
                     </div>
                 </div>
             </div>

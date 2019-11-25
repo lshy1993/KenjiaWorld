@@ -10,17 +10,22 @@ export default new Router({
     {
       path: '/',
       name: 'navi',
-      component: ()=> import('../components/Navi.vue')
+      component: ()=> import('../pages/Navi.vue')
+    },
+    {
+      path: '/alphasoul',
+      name: 'navi',
+      component: ()=> import('../pages/Navi.vue')
     },
     {
       path: '/home',
       name: 'home',
-      component: ()=> import('../components/HelloWorld.vue')
+      component: ()=> import('../pages/forums/Forums.vue')
     },
     {
       path: '/res',
       name: 'result',
-      component: () => import('../components/Result.vue')
+      component: () => import('../pages/forums/Result.vue')
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
 <div id="infoContent">
     <div id="topBandImage">
-        <img src="../assets/still_unit_107731.png" />
+        <img src="../../assets/still_unit_107731.png" />
     </div>
     <div class="insetContent">
         <div id="topContent">
@@ -25,7 +25,7 @@
                 <div id="broadBox" class="shadowBox">
                     <span>公告</span>
                     <div id="cvBox">
-                        <img src="../assets/still_unit_100231.png"/>
+                        <img src="../../assets/still_unit_100231.png"/>
                     </div>
                     <ul>
                         <li v-for="i in 5" :key="'a'+i">{{ i }}</li>

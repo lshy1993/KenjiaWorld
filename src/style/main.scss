@@ -1,0 +1,43 @@
+.naviSide {
+    position: fixed;
+    right: 0;
+    width: 0px;
+    //height: 100%;
+    background: gray;
+    text-align: left;
+    transition: all 0.3s;
+    z-index: 1020;
+
+    &.wide {
+        width: 270px;
+    }
+
+    .naviWrap{
+        width: 150px;
+        padding: 10px;
+    }
+
+    .loginBtn {
+        position: absolute;
+        left: -50px;
+        width: 50px;
+        height: 50px;
+        background: white;
+        transition: all 0.3s;
+
+        &.wide{
+            left: -50px;
+        }
+    }
+
+    .naviLine {
+        height: 2px;
+        margin: 10px 0 10px 0;
+        background: white;
+    }
+
+    .naviLink {
+        height: auto;
+        margin-bottom: 5px;
+    }
+}
