@@ -21,6 +21,7 @@
 </template>
 
 <script>
+var crypto = require('crypto');
 import loginBox from './components/LoginBox.vue';
 export default {
     name: 'app',
@@ -47,10 +48,14 @@ export default {
             if (this.loginForm.username === '' || this.loginForm.password === '') {
                 alert('账号或密码不能为空');
             }else{
+                var loginform = {
+                    username: this.loginForm.username,
+                    password: this.cryptPwd(this.loginForm.password)
+                }
                 // 登陆验证
                 var url = this.Func.GetApi('/user/login');
                 var _this = this;
-                this.$http.post(url).then((response)=>{
+                this.$http.post(url,loginform).then((response)=>{
                     console.log(response.data);
                     _this.userToken = 'Bearer ' + response.data.data.body.token;
                     // 将用户token保存
@@ -60,11 +65,20 @@ export default {
                     alert('登陆成功');
                 });
             }
-            
-            
         },
         logOut(){
             this.userLogined = false;
+        },
+        cryptPwd(password) {
+            var salt = "kusuharaui"
+            // 密码“加盐”
+            var saltPassword = password + ':' + salt;
+            console.log('原始密码：%s', password);
+            console.log('加盐后的密码：%s', saltPassword);
+            // 加盐密码的md5值
+            var md5 = crypto.createHash('md5');
+            var result = md5.update(saltPassword).digest('hex');
+            console.log('加盐密码的md5值：%s', result);
         }
     },
     components: {
