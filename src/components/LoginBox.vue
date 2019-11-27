@@ -1,18 +1,18 @@
 <template>
-<div class="loginBox" @click.stop>
-    <form class="loginForm" autocomplete="on" :model="loginData">
+<div class="loginBox" @click.stop @mousedown.stop>
+    <form class="loginForm" autocomplete="on">
         <div class="inputLine">
             <label for="login-user">UserName</label>
-            <input id="login-user" type="text" v-model="loginData.name" :placeholder="loginHint.user" autocomplete="on">
+            <input id="login-user" type="text" v-model="username" :placeholder="loginHint.user" autocomplete="on">
             <span class="errMsg">{{ loginErrMsg.user }}</span>
         </div>
         <div class="inputLine">
             <label for="login-pwd">PassWord</label>
-            <input id="login-pwd" type="password" v-model="loginData.password" :placeholder="loginHint.pwd" autocomplete="on" @keyup.enter="handleLogin(loginData)">
+            <input id="login-pwd" type="password" v-model="password" :placeholder="loginHint.pwd" autocomplete="on" @keyup.enter="handleLogin()">
             <span class="errMsg">{{ loginErrMsg.pwd }}</span>
         </div>
-        <button type="button" class="btn-primary clickable" @click="handleLogin(loginData)">
-            <span>登录</span>
+        <button type="button" class="btn-primary clickable" @click="handleLogin()">
+            <span>{{ username? registerMode ? "注册" : "登录" : "注册 or 登录" }}</span>
         </button>
         <div class="tipLine">开发组账号为:editor 密码123456</div>
         <div class="tipLine">游客账号:guest 密码123456</div>
@@ -21,10 +21,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
     name: 'LoginBox',
     data(){
         return {
+            registerMode: false,
             loginHint:{
                 user: '用户名',
                 pwd: '密码'
@@ -33,24 +35,65 @@ export default {
                 user: '',
                 pwd: ''
             },
-            loginData:{
-                name: '',
-                password: ''
-            }
+            username: '',
+            password: ''
+        }
+    },
+    watch:{
+        username(){
+            // 查询是否已经被注册
+            var data = { username: this.username };
+            var post = this.Func.GetPostObject('/user/usercheck',data);
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+                this.registerMode = response.data;
+            });
+        },
+        password(){
+            this.checkPassword();
+            //console.log('pwd changed');
         }
     },
     methods:{
-        handleLogin: function(loginData){
-            
-            if(!loginData.name){
+        handleLogin: function(){
+            if(this.checkUsername(this.username) && this.checkPassword(this.password)){
+                var loginData = {
+                    username: this.username,
+                    password: this.password
+                }
+                //console.log(loginData);
+                // 验证后将表单 emit 回上级
+                if(this.registerMode){
+                    this.$emit('signup', loginData);
+                }else{
+                    this.$emit('login', loginData);
+                }
+                
+            }
+        },
+        checkUsername(){
+            // 检测用户名是否合法
+            if(!this.username){
                 this.loginErrMsg.user = "用户名不能为空";
+                return false;
             }
-            if(!loginData.password){
+            this.loginErrMsg.user = "";
+            return true;
+        },
+        checkPassword(){
+            // 登录模式不检测
+            if(!this.registerMode) return true;
+            // 检测密码是否合法
+            if(!this.password){
                 this.loginErrMsg.pwd = "请输入密码";
+                return false;
             }
-            console.log(loginData);
-            // 验证后emit回上级
-            this.$emit('login',this.loginData);
+            if(this.password.length < 6){
+                this.loginErrMsg.pwd = "密码长度过小";
+                return false;
+            }
+            this.loginErrMsg.pwd = "";
+            return true;
         }
     }
 }

@@ -118,7 +118,7 @@ export default {
         initDanmaku(i){
             var div = document.getElementById('dan'+i);
             if(!div) return;
-            console.log('init!');
+            //console.log('init!');
             div.style.right = '-100px';
             div.style.top = Math.random()*(window.innerHeight-100)+'px';
             div.style.color = 'white';

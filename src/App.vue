@@ -9,19 +9,20 @@
                 <div>头像 用户信息</div>
                 <div class="naviLine"></div>
                 <router-link class="naviLink" to="/">
-                    <div v-if="sideOn" style="font-size: 24px;">用户主页</div>
+                    <div style="font-size: 24px;">用户主页</div>
                 </router-link>
             </div>
         </aside>
-        <div v-if="loginOn & !userLogined" class="loginDiv" @click="showLoginBox">
-            <login-box @login="logIn"/>
+        <div v-if="loginOn & !userLogined" class="loginDiv" @mousedown="showLoginBox">
+            <login-box @login="logIn" @signup="signUp"/>
         </div>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-var crypto = require('crypto');
+/* eslint-disable */
+
 import loginBox from './components/LoginBox.vue';
 export default {
     name: 'app',
@@ -39,46 +40,55 @@ export default {
     methods:{
         showLoginBox(){
             this.loginOn = !this.loginOn;
-            this.hideScroll();
-        },
-        hideScroll(){
             document.body.classList = [this.loginOn?"hideScroll":""];
         },
-        logIn(){
-            if (this.loginForm.username === '' || this.loginForm.password === '') {
-                alert('账号或密码不能为空');
-            }else{
-                var loginform = {
-                    username: this.loginForm.username,
-                    password: this.cryptPwd(this.loginForm.password)
-                }
-                // 登陆验证
-                var url = this.Func.GetApi('/user/login');
-                var _this = this;
-                this.$http.post(url,loginform).then((response)=>{
-                    console.log(response.data);
-                    _this.userToken = 'Bearer ' + response.data.data.body.token;
-                    // 将用户token保存
-                    _this.hideScroll();
-                    _this.loginOn = false;
-                    _this.userLogined = true;
-                    alert('登陆成功');
-                });
+        closeLoginBox(){
+            alert('登陆成功');
+            //_this.userToken = 'Bearer ' + response.data.data.body.token;
+            // 将用户token保存
+            this.loginOn = false;
+            this.userLogined = true;
+            document.body.classList = [this.loginOn?"hideScroll":""];
+            var post = this.Func.GetPostObject('/user/info', {});
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+            });
+        },
+        logIn(formdata){
+            var loginform = {
+                username: formdata.username,
+                password: this.Func.cryptPwd(formdata.password)
             }
+            // 登陆验证
+            var _this = this;
+            var post = this.Func.GetPostObject('/user/login', loginform);
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+                _this.closeLoginBox();
+            });
+        },
+        signUp(formdata){
+            var signupform = {
+                username: formdata.username,
+                password: this.Func.cryptPwd(formdata.password)
+            }
+            // 注册
+            //console.log(signupform);
+            var post = this.Func.GetPostObject('/user/signup', signupform);
+            var _this = this;
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+                console.log('注册成功');
+                // 登录界面
+                _this.closeLoginBox();
+            });
         },
         logOut(){
-            this.userLogined = false;
-        },
-        cryptPwd(password) {
-            var salt = "kusuharaui"
-            // 密码“加盐”
-            var saltPassword = password + ':' + salt;
-            console.log('原始密码：%s', password);
-            console.log('加盐后的密码：%s', saltPassword);
-            // 加盐密码的md5值
-            var md5 = crypto.createHash('md5');
-            var result = md5.update(saltPassword).digest('hex');
-            console.log('加盐密码的md5值：%s', result);
+            //var form = { username: this.user.name };
+            var post = this.Func.GetPostObject('/user/logout',{});
+            this.$http(post).then((response)=>{
+                this.userLogined = false;
+            })
         }
     },
     components: {
