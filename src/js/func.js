@@ -11,14 +11,14 @@ function GetApi(path){
     //var url = "https://api.luckymiao.site/"
     var url = "https://api.liantui.moe"
     if(process.env.NODE_ENV == 'development'){
-        url = "http://192.168.1.5:3000"
+        url = "/api"
     }
     return url + path;
 }
 
 function GetPostObject(url,data){
     url = GetApi(url);
-    //console.log(url);
+    console.log(url);
     var options = {
         method: 'POST',
         headers: {
