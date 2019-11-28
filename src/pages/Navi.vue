@@ -39,8 +39,8 @@
     <div id="danmakuBtn">
         <button @click="hideComment = !hideComment">隐藏</button>
         <div>发送弹幕</div>
-        <input v-model="textcomment" type="textbox" />
-        <button @click="sendComment">发送</button>
+        <input :disabled="!userLogined" v-model="textcomment" type="textbox" placeholder="登陆后即可发送弹幕" />
+        <button :disabled="!userLogined" @click="sendComment">发送</button>
     </div>
     <audio id="myAudio" :src="music.src" loop="loop" autoplay="autoplay"/>
     <foot-player :music="music" :audioStatus="aStatus"/>    
@@ -76,6 +76,14 @@ export default {
             }
         }
     },
+    computed:{
+        barvalue:function(){
+            return 'width:'+this.ttime/10/this.jumpsec+'%';
+        },
+        userLogined(){
+            return this.User.logined;
+        }
+    },
     mounted(){
         this.setMusic();
         this.resetDanmakuPos();
@@ -90,11 +98,6 @@ export default {
         //         this.$router.push({path:'/home'});
         //     }
         // },100)
-    },
-    computed:{
-        barvalue:function(){
-            return 'width:'+this.ttime/10/this.jumpsec+'%';
-        }
     },
     methods:{
         setMusic(){

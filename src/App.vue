@@ -5,7 +5,7 @@
                 <div v-if="!userLogined" @click="showLoginBox">登录</div>
                 <div v-if="userLogined" @click="logOut">Logout</div>
             </div>
-            <div v-if="userLogined" class="naviWrap">
+            <div v-if="User.logined" class="naviWrap">
                 <div>头像 用户信息</div>
                 <div class="naviLine"></div>
                 <router-link class="naviLink" to="/">
@@ -13,7 +13,7 @@
                 </router-link>
             </div>
         </aside>
-        <div v-if="loginOn & !userLogined" class="loginDiv" @mousedown="showLoginBox">
+        <div v-if="loginOn & !User.logined" class="loginDiv" @mousedown="showLoginBox">
             <login-box @login="logIn" @signup="signUp"/>
         </div>
         <router-view></router-view>
@@ -22,20 +22,30 @@
 
 <script>
 /* eslint-disable */
-
+import User from './js/user';
 import loginBox from './components/LoginBox.vue';
 export default {
     name: 'app',
     data(){
         return{
-            userLogined: false,
             debug: true,
             loginOn: false,
-            userToken: '',
+            
         }
+    },
+    computed:{
+        userLogined(){
+            return this.User.logined;
+        },
+        currentUser(){
+            return this.User.userinfo;
+        },
     },
     created() {
         this.debug = process.env.NODE_ENV == 'development';
+    },
+    mounted(){
+        this.initLoginInfo();
     },
     methods:{
         showLoginBox(){
@@ -43,28 +53,59 @@ export default {
             document.body.classList = [this.loginOn?"hideScroll":""];
         },
         closeLoginBox(){
-            alert('登陆成功');
-            //_this.userToken = 'Bearer ' + response.data.data.body.token;
-            // 将用户token保存
             this.loginOn = false;
-            this.userLogined = true;
+            this.User.logined = true;
+            console.log(this.User.logined);
+            console.log(this.userLogined);
             document.body.classList = [this.loginOn?"hideScroll":""];
+            this.getUserInfo();
+        },
+        initLoginInfo(){
+            var validtime = localStorage.getItem("validtime");
+            if(!validtime){
+                // 不存在
+            }else if(this.$moment().isAfter(validtime)){
+                // 超时需要重新登录
+                this.logOut();
+            }else{
+                // 在时间内 再次获取session
+                let loginform = {
+                    username: localStorage.getItem('user'),
+                    password: localStorage.getItem('pwd')
+                }
+                this.loginPost(loginform);
+            }
+        },
+        getUserInfo(){
             var post = this.Func.GetPostObject('/user/info', {});
             this.$http(post).then((response)=>{
                 console.log(response.data);
+                // 设置用户信息
+                //this.User = response.data;
             });
         },
         logIn(formdata){
+            // 加密
             var loginform = {
                 username: formdata.username,
                 password: this.Func.cryptPwd(formdata.password)
             }
+            this.loginPost(loginform);
+        },
+        loginPost(loginform){
             // 登陆验证
             var _this = this;
             var post = this.Func.GetPostObject('/user/login', loginform);
             this.$http(post).then((response)=>{
-                console.log(response.data);
+                //console.log(response.data);
+                // alert('登陆成功');
+
                 _this.closeLoginBox();
+                var data = response.data;
+                // 将用户信息保存localstorage
+                localStorage.setItem('user', loginform.username);
+                localStorage.setItem('pwd', loginform.password);
+                localStorage.setItem('validtime', this.$moment().add(2,'d').format());
             });
         },
         signUp(formdata){
@@ -73,22 +114,24 @@ export default {
                 password: this.Func.cryptPwd(formdata.password)
             }
             // 注册
-            //console.log(signupform);
             var post = this.Func.GetPostObject('/user/signup', signupform);
             var _this = this;
             this.$http(post).then((response)=>{
-                console.log(response.data);
+                //console.log(response.data);
                 console.log('注册成功');
                 // 登录界面
                 _this.closeLoginBox();
             });
         },
         logOut(){
-            //var form = { username: this.user.name };
             var post = this.Func.GetPostObject('/user/logout',{});
             this.$http(post).then((response)=>{
-                this.userLogined = false;
-            })
+                this.User.logined = false;
+                localStorage.removeItem('user');
+                localStorage.removeItem('pwd');
+                localStorage.removeItem('validtime');
+            });
+            //this.getUserInfo();
         }
     },
     components: {

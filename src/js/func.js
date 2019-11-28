@@ -37,11 +37,11 @@ function cryptPwd(password) {
     // 加盐密码的md5值
     var md5 = crypto.createHash('md5');
     var saltPassword = md5.update(password).digest('hex')+':'+salt;
-    console.log('原始密码：%s', password);
-    console.log('加盐后的密码：%s', saltPassword);
+    //console.log('原始密码：%s', password);
+    //console.log('加盐后的密码：%s', saltPassword);
     var sha256 = crypto.createHash('sha256');
     var result = sha256.update(saltPassword).digest('hex');
-    console.log('密文：%s', result);
+    //console.log('密文：%s', result);
     return result;
 }
 

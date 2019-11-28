@@ -12,11 +12,11 @@ export default new Router({
       name: 'navi',
       component: ()=> import('../pages/Navi.vue')
     },
-    {
-      path: '/alphasoul',
-      name: 'navi',
-      component: ()=> import('../pages/Navi.vue')
-    },
+    // {
+    //   path: '/alphasoul',
+    //   name: 'navi',
+    //   component: ()=> import('../pages/Navi.vue')
+    // },
     {
       path: '/home',
       name: 'home',
