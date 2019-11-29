@@ -5,7 +5,7 @@
                 <div v-if="!userLogined" @click="showLoginBox">登录</div>
                 <div v-if="userLogined" @click="logOut">Logout</div>
             </div>
-            <div v-if="User.logined" class="naviWrap">
+            <div v-if="userLogined" class="naviWrap">
                 <div>头像 用户信息</div>
                 <div class="naviLine"></div>
                 <router-link class="naviLink" to="/">
@@ -13,10 +13,10 @@
                 </router-link>
             </div>
         </aside>
-        <div v-if="loginOn & !User.logined" class="loginDiv" @mousedown="showLoginBox">
+        <div v-if="loginOn & !userLogined" class="loginDiv" @mousedown="showLoginBox">
             <login-box @login="logIn" @signup="signUp"/>
         </div>
-        <router-view></router-view>
+        <router-view :user="user"></router-view>
     </div>
 </template>
 
@@ -30,22 +30,25 @@ export default {
         return{
             debug: true,
             loginOn: false,
-            
+            user: {
+                userinfo: {},
+                logined: false
+            }
         }
     },
     computed:{
         userLogined(){
-            return this.User.logined;
+            return this.user.logined;
         },
-        currentUser(){
-            return this.User.userinfo;
-        },
+        // currentUser(){
+        //     return this.use.userinfo;
+        // },
     },
     created() {
         this.debug = process.env.NODE_ENV == 'development';
     },
     mounted(){
-        this.initLoginInfo();
+        this.initLoginStatus();
     },
     methods:{
         showLoginBox(){
@@ -54,34 +57,45 @@ export default {
         },
         closeLoginBox(){
             this.loginOn = false;
-            this.User.logined = true;
-            console.log(this.User.logined);
-            console.log(this.userLogined);
+            this.user.logined = true;
             document.body.classList = [this.loginOn?"hideScroll":""];
             this.getUserInfo();
         },
-        initLoginInfo(){
-            var validtime = localStorage.getItem("validtime");
-            if(!validtime){
-                // 不存在
-            }else if(this.$moment().isAfter(validtime)){
-                // 超时需要重新登录
-                this.logOut();
-            }else{
-                // 在时间内 再次获取session
-                let loginform = {
-                    username: localStorage.getItem('user'),
-                    password: localStorage.getItem('pwd')
+        initLoginStatus(){
+            // 检测登录状态
+            var post = this.Func.GetPostObject('/user/session', {});
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+                // 设置用户信息
+                if(response.data == 'valid'){
+                    // 直接登录
+                    this.closeLoginBox();
+                }else{
+                    // 需要重新登录
                 }
-                this.loginPost(loginform);
-            }
+            });
+            
+            // var validtime = localStorage.getItem("validtime");
+            // if(!validtime){
+            //     // 不存在
+            // }else if(this.$moment().isAfter(validtime)){
+            //     // 超时需要重新登录
+            //     this.logOut();
+            // }else{
+            //     // 在时间内 再次获取session
+            //     let loginform = {
+            //         username: localStorage.getItem('user'),
+            //         password: localStorage.getItem('pwd')
+            //     }
+            //     this.loginPost(loginform);
+            // }
         },
         getUserInfo(){
             var post = this.Func.GetPostObject('/user/info', {});
             this.$http(post).then((response)=>{
                 console.log(response.data);
                 // 设置用户信息
-                //this.User = response.data;
+                //this.user = response.data;
             });
         },
         logIn(formdata){
@@ -99,7 +113,6 @@ export default {
             this.$http(post).then((response)=>{
                 //console.log(response.data);
                 // alert('登陆成功');
-
                 _this.closeLoginBox();
                 var data = response.data;
                 // 将用户信息保存localstorage
@@ -126,7 +139,7 @@ export default {
         logOut(){
             var post = this.Func.GetPostObject('/user/logout',{});
             this.$http(post).then((response)=>{
-                this.User.logined = false;
+                this.user.logined = false;
                 localStorage.removeItem('user');
                 localStorage.removeItem('pwd');
                 localStorage.removeItem('validtime');

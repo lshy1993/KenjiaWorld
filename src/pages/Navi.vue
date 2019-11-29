@@ -42,7 +42,7 @@
         <input :disabled="!userLogined" v-model="textcomment" type="textbox" placeholder="登陆后即可发送弹幕" />
         <button :disabled="!userLogined" @click="sendComment">发送</button>
     </div>
-    <audio id="myAudio" :src="music.src" loop="loop" autoplay="autoplay"/>
+    <audio id="myAudio" :src="music.src" loop="loop" autoplay="none"/>
     <foot-player :music="music" :audioStatus="aStatus"/>    
 </div>
 </template>
@@ -52,6 +52,7 @@
 import footPlayer from '../components/FootPlayer';
 export default {
     name: 'NaviPage',
+    props: ['user'],
     data(){
         return {
             ttime: 0,
@@ -81,7 +82,7 @@ export default {
             return 'width:'+this.ttime/10/this.jumpsec+'%';
         },
         userLogined(){
-            return this.User.logined;
+            return this.user.logined;
         }
     },
     mounted(){

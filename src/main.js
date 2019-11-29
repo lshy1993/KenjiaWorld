@@ -14,8 +14,8 @@ import data from './js/data.js';
 Vue.prototype.Common = data;
 import func from './js/func.js';
 Vue.prototype.Func = func;
-import user from './js/user.js';
-Vue.prototype.User = user;
+// import user from './js/user.js';
+// Vue.prototype.User = user;
 
 //import '/style/main.css';
 import './style/main.scss';
