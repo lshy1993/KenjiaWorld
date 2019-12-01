@@ -15,13 +15,13 @@
             <div id="underline" class="lineBox floatBox"></div>
         </div>
         <div id="metroBox">
-            <a v-for="(link,index) in navis" :key="index" :href=link.url>
+            <router-link v-for="(link,index) in navis" :key="index" :to="link.url">
                 <div class="itemBox noselect rect200">
                     <div class="boxBackground">{{link.img}}</div>
                     <div class="title">{{link.text}}</div>
                     <div class="hidden">{{link.subtext}}</div>
                 </div>
-            </a>
+            </router-link>
         </div>
         <div id="footerBox">
             <a v-for="(link, index) in sflink" :key="index" :href=link.url>
@@ -37,9 +37,9 @@
         </div>
     </div>
     <div id="danmakuBtn">
-        <button @click="hideComment = !hideComment">隐藏</button>
+        <button @click="hideComment = !hideComment">{{ hideComment?'显示':'隐藏'}}</button>
         <div>发送弹幕</div>
-        <input :disabled="!userLogined" v-model="textcomment" type="textbox" placeholder="登陆后即可发送弹幕" />
+        <input :disabled="!userLogined" v-model="textcomment" type="textbox" :placeholder="commentMsg" />
         <button :disabled="!userLogined" @click="sendComment">发送</button>
     </div>
     <audio id="myAudio" :src="music.src" loop="loop" autoplay="none"/>
@@ -57,6 +57,7 @@ export default {
         return {
             ttime: 0,
             jumpsec: 30,
+            danmakutimer: Object,
             textcomment: '',
             navis: this.Common.topBoxList,
             sflink: this.Common.sideJumpList,
@@ -83,7 +84,13 @@ export default {
         },
         userLogined(){
             return this.user.logined;
-        }
+        },
+        commentMsg(){
+            return this.user.logined?"请输入弹幕":"登陆后即可发送弹幕";
+        },
+    },
+    created(){
+        clearInterval(this.danmakutimer);
     },
     mounted(){
         this.setMusic();
@@ -101,6 +108,9 @@ export default {
         // },100)
     },
     methods:{
+        loginDone(){
+            console.log('done');
+        },
         setMusic(){
             this.audio = document.getElementById("myAudio");
             this.audio.volume = 0.2;
@@ -111,11 +121,12 @@ export default {
             //this.nextPath = this.Func.ranBG();
         },
         resetDanmakuPos(){
+            console.log('reset danmakubox');
             for(var i=0;i<this.danmakuList.length;i++){
                 this.initDanmaku(i);
             }
             var _this = this;
-            setInterval(()=>{
+            this.danmakutimer = setInterval(()=>{
                 _this.moveDanmaku();
             },10)
         },

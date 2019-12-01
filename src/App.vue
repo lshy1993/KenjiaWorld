@@ -1,22 +1,30 @@
 <template>
     <div id="app">
-        <aside :class="['naviSide', userLogined?'wide':'']">
-            <div class="loginBtn">
-                <div v-if="!userLogined" @click="showLoginBox">登录</div>
-                <div v-if="userLogined" @click="logOut">Logout</div>
+        <aside :class="['userSide', sideOn?'wide':'']">
+            <div class="hideBtn" @click="sideOn=!sideOn">
+                <span>{{ sideOn ? "→" : "←" }}</span>
             </div>
-            <div v-if="userLogined" class="naviWrap">
-                <div>头像 用户信息</div>
-                <div class="naviLine"></div>
-                <router-link class="naviLink" to="/">
-                    <div style="font-size: 24px;">用户主页</div>
-                </router-link>
+            <div class="naviWrap">
+                <div v-if="!userLogined">
+                    <div>登陆后可使用更多功能</div>
+                    <div class="naviLine"></div>
+                    <div class="loginBtn" @click="showLoginBox">登录</div>
+                </div>
+                <div v-if="userLogined">
+                    <div>头像 用户信息</div>
+                    <div class="naviLine"></div>
+                    <router-link class="naviLink" to="/">
+                        <div style="font-size: 24px;">MoeLink</div>
+                    </router-link>
+                    <div class="naviLine"></div>
+                    <div class="loginBtn" @click="logOut">Logout</div>
+                </div>
             </div>
         </aside>
         <div v-if="loginOn & !userLogined" class="loginDiv" @mousedown="showLoginBox">
             <login-box @login="logIn" @signup="signUp"/>
         </div>
-        <router-view :user="user"></router-view>
+        <router-view ref="mainPage" :user="user"></router-view>
     </div>
 </template>
 
@@ -30,6 +38,7 @@ export default {
         return{
             debug: true,
             loginOn: false,
+            sideOn: false,
             user: {
                 userinfo: {},
                 logined: false
@@ -55,40 +64,32 @@ export default {
             this.loginOn = !this.loginOn;
             document.body.classList = [this.loginOn?"hideScroll":""];
         },
-        closeLoginBox(){
+        openUserPanel(){
             this.loginOn = false;
             this.user.logined = true;
             document.body.classList = [this.loginOn?"hideScroll":""];
-            this.getUserInfo();
         },
         initLoginStatus(){
-            // 检测登录状态
+            var validtime = localStorage.getItem("validtime");
+            if(!validtime || this.$moment().isAfter(validtime)){
+                // 不存在或超时 需要重新登录
+                this.removeUserInfo();
+                return;
+            }
+            // 在时间内 检测session状态
             var post = this.Func.GetPostObject('/user/session', {});
             this.$http(post).then((response)=>{
-                console.log(response.data);
-                // 设置用户信息
                 if(response.data == 'valid'){
-                    // 直接登录
-                    this.closeLoginBox();
+                    // 直接设置已登录
+                    //console.log(response.data);
+                    this.openUserPanel();
                 }else{
-                    // 需要重新登录
+                    console.log(response.data);
                 }
+            },(err)=>{
+                // 需要重新登录
+                this.removeUserInfo();
             });
-            
-            // var validtime = localStorage.getItem("validtime");
-            // if(!validtime){
-            //     // 不存在
-            // }else if(this.$moment().isAfter(validtime)){
-            //     // 超时需要重新登录
-            //     this.logOut();
-            // }else{
-            //     // 在时间内 再次获取session
-            //     let loginform = {
-            //         username: localStorage.getItem('user'),
-            //         password: localStorage.getItem('pwd')
-            //     }
-            //     this.loginPost(loginform);
-            // }
         },
         getUserInfo(){
             var post = this.Func.GetPostObject('/user/info', {});
@@ -104,22 +105,31 @@ export default {
                 username: formdata.username,
                 password: this.Func.cryptPwd(formdata.password)
             }
-            this.loginPost(loginform);
-        },
-        loginPost(loginform){
             // 登陆验证
             var _this = this;
             var post = this.Func.GetPostObject('/user/login', loginform);
             this.$http(post).then((response)=>{
-                //console.log(response.data);
-                // alert('登陆成功');
-                _this.closeLoginBox();
-                var data = response.data;
-                // 将用户信息保存localstorage
-                localStorage.setItem('user', loginform.username);
-                localStorage.setItem('pwd', loginform.password);
-                localStorage.setItem('validtime', this.$moment().add(2,'d').format());
+                // 成功登录
+                _this.loginDone();
+            },(err)=>{
+                // 密码错误
+                _this.loginError();
             });
+        },
+        loginDone(){
+            // 成功登录的部分
+            // alert('登陆成功');
+            // 将用户信息保存localstorage
+            localStorage.setItem('validtime', this.$moment().add(7,'d').format());
+            // localStorage.setItem('user', loginform.username);
+            // localStorage.setItem('pwd', loginform.password);
+            this.getUserInfo();
+            this.openUserPanel();
+            this.$refs.mainPage.loginDone();
+        },
+        loginError(){
+            // 失败部分
+            alert('密码错误');
         },
         signUp(formdata){
             var signupform = {
@@ -137,14 +147,19 @@ export default {
             });
         },
         logOut(){
+            var _this = this;
             var post = this.Func.GetPostObject('/user/logout',{});
             this.$http(post).then((response)=>{
-                this.user.logined = false;
-                localStorage.removeItem('user');
-                localStorage.removeItem('pwd');
-                localStorage.removeItem('validtime');
+                _this.removeUserInfo();
             });
+            //测试是否登出
             //this.getUserInfo();
+        },
+        removeUserInfo(){
+            this.user.logined = false;
+            localStorage.removeItem('validtime');
+            // localStorage.removeItem('user');
+            // localStorage.removeItem('pwd');
         }
     },
     components: {
@@ -165,9 +180,6 @@ export default {
     &.wide {
         margin-right: 170px;
     }
-}
-.loginBtn {
-    line-height: 50px;
 }
 
 .loginDiv {

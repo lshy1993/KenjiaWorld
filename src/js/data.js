@@ -18,26 +18,27 @@ var topBoxList = [
         text: 'AlphaSoul',
         subtext: '人工智障点炮机',
         img: '',
-        url: 'https://alphasoul.moelink.site',
+        url: '/alphasoul',
     },
     {
-        text: 'Envole',
+        text: 'Evolve',
         subtext: '进化联机版',
         img: '',
-        url: 'https://envole.moelink.site',
+        url: '/evolve2',
     },
     {
         text: 'Re:dive Wiki',
         subtext: '公主链接百科',
         img: '',
-        url: 'https://pcrwiki.moelink.site',
+        url: '/pcrwiki',
     },
     {
-        text: 'LianaiYuTuili',
-        subtext: '恋爱与推理',
+        text: 'World Flipper Wiki',
+        subtext: '弹射世界百科',
         img: '',
-        url: 'https://liantui.moe',
+        url: '/wfwiki',
     },
+
 ]
 
 var sideJumpList = [
@@ -48,7 +49,11 @@ var sideJumpList = [
     {
         url: 'https://blog.luckymiao.site',
         text: 'Blog'
-    }
+    },
+    {
+        url: 'https://liantui.moe',
+        text: 'LianTui',
+    },
 ]
 
 var testList = [
@@ -59,9 +64,54 @@ var testList = [
     'ssdsdfdsfa'
 ]
 
+var naviBtn = [
+    {
+        to: "/",
+        url: '',
+        txt: "首页"
+    },
+    {
+        to: "/chara",
+        url: '',
+        txt: "角色"
+    },
+    {
+        to: "/story",
+        url: '',
+        txt: "故事"
+    },
+    {
+        to: "/quest",
+        url: '',
+        txt: "地图"
+    },
+    {
+        to: "/equip",
+        url: '',
+        txt: "装备"
+    },
+    {
+        to: "/mission",
+        url: '',
+        txt: "任务"
+    },
+    {
+        to: "/kouryuaku",
+        url: '',
+        txt: "攻略"
+    },
+    {
+        to: "/about",
+        url: '',
+        txt: "关于"
+    }
+]
+
+
 export default{
     langs,
     topBoxList,
     sideJumpList,
-    testList
+    testList,
+    naviBtn
 }
