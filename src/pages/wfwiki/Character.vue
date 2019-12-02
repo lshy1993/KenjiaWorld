@@ -1,144 +1,104 @@
 <template>
-<div id="wfapp">
-aaaaaa
+<div id="charaAlbum" class="inset-container">
+    <div class="section whitebox">
+        <div class="sectionhead">
+            角色一览
+        </div>
+        <chara-filter v-on:filter="listenProps"/>
+        <div class="clearfixbox"></div>
+        <transition-group name="flip-list" tag="div" class="container">
+            <chara-plate-img v-for="(ele,index) in charaShowDic" :key="ele.jname" :chara_id="index" :charaData="ele" />
+        </transition-group>
+    </div>
 </div>
 </template>
 
 <script>
 /* eslint-disable */
-var appData = require('../../assets/wf.json'); 
+import charajson from '@/assets/wf.json'; 
+import CharaFilter from '@/components/CharaFilter.vue';
+import CharaPlateImg from '@/components/CharaPlateImg.vue';
+
 export default {
-    name: 'app',
+    name: 'wfchara',
     data(){
         return{
             debug: true,
-            appData,
-            naviBtn: this.Common.naviBtn,
+            filter: {
+                star: [false,false,false,false,false],
+                job: [false,false,false,false,false],
+                type: [false,false,false,false,false]
+            },
         }
     },
+    computed:{
+        charaShowDic: function(){
+            var result = [];
+            for(var key in charajson){
+                let ele = charajson[key];
+                result.push(ele);
+            }
+            // 过滤星级
+            result = result.filter(this.checkStar);
+            // 过滤属性
+            result = result.filter(this.checkType);
+            // 过滤职业
+            result = result.filter(this.checkJob);
+            return result;
+        }
+    },
+    methods:{
+        listenProps: function(childValue){
+            console.log('from child');
+            this.filter = childValue;
+        },
+        checkStar(ele){
+            let keyarr = {};
+            var keys = ['★','★★','★★★','★★★★','★★★★★'];
+            for(var i in this.filter.star){
+                if(this.filter.star[i]){
+                    keyarr[keys[i]] = "";
+                }
+            }
+            if(Object.keys(keyarr).length==0) return true;
+            return ele.rare in keyarr;
+        },
+        checkType(ele){
+            let keyarr = {};
+            for(var i in this.filter.type){
+                if(this.filter.type[i]){
+                    keyarr[i] = "";
+                }
+            }
+            if(Object.keys(keyarr).length==0) return true;
+            return ele.color in keyarr;
+        },
+        checkJob(ele){
+            let keyarr = [];
+            var keys = ['格斗','剑士','射击','辅助','特殊'];
+            for(var i in this.filter.job){
+                if(this.filter.job[i]){
+                    keyarr[keys[i]] = "";
+                }
+            }
+            if(Object.keys(keyarr).length==0) return true;
+            return ele.cv in keyarr;
+        }
+    },
+    components: {
+        CharaFilter,
+        CharaPlateImg
+    }
 }
 </script>
 
 <style lang="scss">
-#wfapp {
-    .naviTop{
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 50px;
-        background: rgb(65,83,195);
-        z-index: 1010;
-        box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
-        user-select: none;
-
-        .naviTitle {
-            position: fixed;
-            width: 240px;
-            color: white;
-            line-height: 50px;
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .topFunction {
-            position: relative;
-            text-align: right;
-            height: 50px;
-            width: auto;
-            line-height: 50px;
-            //padding-left: 15px;
-            //margin-left: 240px;
-
-            .topFuncBtn {
-                cursor: pointer;
-                display: inline-block;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            #optionBox {
-                display: inline-block;
-                //position: absolute;
-                //right: 10px;
-            }
-        }
-        .thumb {
-            width: 320px;
-            height: 180px;
-            background-size: 320px 180px;
-        }
-
-        .thumbframe {
-            cursor: default;
-            position: fixed;
-            text-align: center;
-            background: #2e3243;
-        }
-
+#charaAlbum {
+    //font-family: "Avenir", Helvetica, Arial, sans-serif;
+    .container {
+        display: flex;
+        flex-wrap: wrap;
     }
-    .naviSide {
-        position: fixed;
-        top: 50px;
-        width: 240px;
-        height: 100%;
-        overflow: hidden;
-        background: white;
-        z-index: 1009;
-        box-shadow: 1px 0 5px rgba(0,0,0,.2), 2px 0 2px rgba(0,0,0,.14), 3px 0 1px 2px rgba(0,0,0,.12);
-
-        .naviButton {
-            position: relative;
-            display: block;
-            padding: 10px 20px;
-            font-weight: 400;
-            text-transform: none;
-            transition: background-color .2s;
-
-            &:hover {
-                background: #fed;
-            }
-
-            .naviButtonContent {
-                display: inline-block;
-                
-                .naviImg{
-                    position: absolute;
-                    top: 0;
-                }
-                .naviTxt {
-                    margin: auto;
-                }
-            }
-
-        }
-    }
-
-    #mainBG {
-        //background-image: url(/static/images/still_unit_107731.png);
-        background-size: cover;
-        background-position: right bottom;
-        background-repeat: no-repeat;
-        position: fixed;
-        z-index: -1;
-        top: 50px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        transition: all 2s ease-in-out;
-        
-    }
-
-    .naviContent {
-        margin-left: 250px;
-        padding-top: 50px;
-        transition: all .3s;
-        z-index: 1000;
-    }
-
-    // a.router-link-active.router-link-exact-active {
-    //     color: white;
-    // }
-
 
 }
 </style>

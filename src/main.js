@@ -17,8 +17,8 @@ Vue.prototype.Func = func;
 // import user from './js/user.js';
 // Vue.prototype.User = user;
 
-//import '/style/main.css';
-import './style/main.scss';
+import './style/common.scss';
+import './style/user.scss';
 
 Vue.config.productionTip = false
 

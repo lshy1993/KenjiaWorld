@@ -169,18 +169,17 @@ export default {
 </script>
 
 <style lang="scss">
+// .mainContent {
+//     position: relative;
+//     margin-right: 0px;
+//     transition: all .3s;
+//     z-index: 1000;
+//     // min-height: 100%;
 
-.mainContent {
-    position: relative;
-    margin-right: 0px;
-    transition: all .3s;
-    z-index: 1000;
-    // min-height: 100%;
-
-    &.wide {
-        margin-right: 170px;
-    }
-}
+//     &.wide {
+//         margin-right: 170px;
+//     }
+// }
 
 .loginDiv {
     position: fixed;
@@ -196,21 +195,4 @@ export default {
     z-index: 1020;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin: 0;
-}
-
-img {
-    width: 100%;
-    height: 100%;
-}
 </style>

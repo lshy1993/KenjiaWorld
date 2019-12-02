@@ -272,6 +272,7 @@ export default {
     width: 100%;
     background: rgba(0, 0, 0, 0.378);
     //padding-bottom: 40px;
+    text-align: center;
     z-index: 1002;
     //margin-bottom: 20px;
 

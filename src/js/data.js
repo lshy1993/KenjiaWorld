@@ -66,42 +66,42 @@ var testList = [
 
 var naviBtn = [
     {
-        to: "/",
+        to: "/wfwiki/",
         url: '',
         txt: "首页"
     },
     {
-        to: "/chara",
+        to: "/wfwiki/chara",
         url: '',
         txt: "角色"
     },
     {
-        to: "/story",
+        to: "/wfwiki/story",
         url: '',
         txt: "故事"
     },
     {
-        to: "/quest",
+        to: "/wfwiki/quest",
         url: '',
         txt: "地图"
     },
     {
-        to: "/equip",
+        to: "/wfwiki/equip",
         url: '',
         txt: "装备"
     },
     {
-        to: "/mission",
+        to: "/wfwiki/mission",
         url: '',
         txt: "任务"
     },
     {
-        to: "/kouryuaku",
+        to: "/wfwiki/kouryuaku",
         url: '',
         txt: "攻略"
     },
     {
-        to: "/about",
+        to: "/wfwiki/about",
         url: '',
         txt: "关于"
     }

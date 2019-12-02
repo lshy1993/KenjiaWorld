@@ -1,0 +1,236 @@
+// 通用样式表
+body {
+    font-family: "Source Sans Pro","Hiragino Sans GB","Microsoft Yahei", "SimSun" , Helvetica,Arial,Sans-serif;
+    background: #fed;
+    margin: 0;
+    overflow-x: hidden;
+
+    transition: all .3s;
+
+    &.hideScroll {
+        overflow: hidden;
+    }
+
+    blockquote, div, dl, dt, dd,
+    h1, h2, h3, h4, h5, h6,
+    ol, ul, li, p, pre, span, td, th, form,
+    article, aside, canvas, details, figcaption, figure, header,
+    footer,hgroup, menu, nav, section, summary, audio, video {
+        margin: 0;
+        padding: 0;
+    }
+
+    .clearfixbox:after {
+        clear: both;
+        content: '';
+        display: block;
+    }
+
+    .clearfix{
+		float: left;
+    }
+    
+    h1 {
+        color: green;
+    }
+
+    a {
+        text-decoration:none;  /*超链接无下划线*/
+        color: black;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .inset-container {
+        // position: relative;
+        // overflow: hidden;
+        margin: 0 auto;
+        max-width: 72em;
+        min-width: 230px;
+        height: 100%;
+    }
+
+    .section {
+        box-shadow: 0 0 0.15em 0.15em rgba(0,0,0,.125);
+        margin: 1em;
+        display: inline-block;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 90vh;
+
+        .sectionhead {
+            width: 100%;
+            line-height: 50px;
+
+            h2 {
+                display: inline-block;
+                
+            }
+            .righthead {
+                display: inline-block;
+            }
+        }
+
+    }
+
+    .whitebox {
+        //margin-bottom: 30px;
+        padding: 10px 10px;
+        //display: inline-block;
+        background: rgba(255, 255, 255, 0.8);
+        transition-duration: .5s;
+    
+        a {
+            color: #69F;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .caption {
+            text-align: right;
+            font-size: 36px;
+        }
+    
+        h2 {
+            display: block;
+            padding: 5px 10px;
+            font-size: 28px;
+            //line-height: 30px;
+        }
+    
+        h3 {
+            padding: 10px 0 8px 3px;
+            font-size: 20px;
+            border-bottom: 2px #333 solid;
+        }
+    
+        h4 {
+            //text-align: left;
+            margin: 10px 0 10px 10px;
+            padding-left: 5px;
+            font-size: 16px;
+            border-left: 3px #69F solid;
+        }
+        
+        aside {
+            padding: 5px 5px 10px 0;
+            text-align: right;
+            font-size: 12px;
+        }
+        
+        ul {
+            padding: 10px 30px;
+            text-align: left;
+            font-size: 14px;
+            
+            li {
+                line-height: 1.8em;
+            }
+        }
+    }
+
+    .CountDown {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        border-radius: 10px;
+        padding: 10px;
+        background: rgba(255,255,255,0.7);
+
+        h2 {
+            margin: 0 10px 0 10px;
+            padding: 0;
+            font-size: 24px;
+        }
+    }
+    .fullScreen{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    .tab-button {
+        padding: 6px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #ccc;
+        //cursor: pointer;
+        background: #f0f0f0;
+        margin-bottom: -1px;
+        margin-right: -1px;
+    }
+    .tab-button:hover {
+        background: #e0e0e0;
+    }
+    .tab-button.active {
+        background: #e0e0e0;
+    }
+    .tab {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    div.small_icon32 {
+        width: 32px;
+        height: 32px;
+    }
+    div.small_icon48 {
+		width: 48px;
+		height: 48px;
+    }
+    div.small_icon64 {
+        width: 64px;
+        height: 64px;
+    }
+    div.small_icon90{
+        width: 90px;
+        height: 90px;
+    }
+    div.thumb128{
+        width: 128px;
+        height: 64px;
+    }
+    .relative{
+        position: relative;
+    }
+    .floatnum {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+        font-size: 16px;
+        color: #000;
+        text-shadow: #fff -1px 0 0,#fff 0 -1px 0,#fff 1px 0 0,#fff 0 1px 0;
+    }
+    .col160{
+        width: 160px;
+    }
+    .flip-list-move {
+        transition: transform 1s;
+    }
+    .flip-list-enter, .flip-list-leave-to {
+        opacity: 0;
+        transform: translateX(30px);
+        //transform: translateY(30px);
+    }
+    .flip-list-leave-active {
+        position: absolute;
+    }
+    .filewrap {
+        flex-wrap: wrap;
+        display: flex;
+    
+        .fileplate {
+            margin: 5px;
+        }
+
+        .filename {
+            display: block;
+            text-align: center;
+        }
+    } 
+}

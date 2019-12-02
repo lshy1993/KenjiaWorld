@@ -23,14 +23,22 @@ export default new Router({
       component: ()=> import('../pages/wfwiki/WorldFlipper.vue'),
       children:[
         { path:'', component: ()=>import('../pages/wfwiki/Character.vue') },
-        { path:'/Character', component: ()=>import('../pages/wfwiki/Character.vue') },
-        { path:'/Equipment', component: ()=>import('../pages/wfwiki/Character.vue') }
+        { path:'chara', component: ()=>import('../pages/wfwiki/Character.vue') },
+        { path:'chara/:id', component: ()=>import('../pages/wfwiki/chara/CharacterDetail.vue') },
+        //{ path:'equip', component: ()=>import('../pages/wfwiki/Equipment.vue') },
+        //{ path:'equip/:id', component: ()=>import('../pages/wfwiki/equip/EquipmentDetail.vue') },
+        { path:'*', component: ()=>import('../pages/wfwiki/Building.vue') },
       ]
     },
     {
       path: '/evolve2',
       name: 'evolve2',
       component: ()=> import('../pages/evolve/Evolve.vue')
+    },
+    {
+      path: '/pcrwiki',
+      name: 'pcrwiki',
+      component: ()=> import('../pages/pcrwiki/PcrWiki.vue')
     },
     {
       path: '/home',

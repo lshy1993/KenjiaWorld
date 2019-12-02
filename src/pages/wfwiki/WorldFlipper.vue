@@ -3,18 +3,9 @@
     <header class="naviTop clearfixbox">
         <div class="naviTitle">WorldFlipper Wiki</div>
         <div class="topFunction">
+            <!--router-link :to="'/download'" class="topFuncBtn">资源下载</router-link-->
             <div class="topFuncBtn">
-                <div class="hidehover" @mouseover="showNxt=true" @mouseout="showNxt=false">背景图</div>
-                <div v-if="showNxt" class="thumbframe">
-                    <div :style="{'line-height':'20px'}">
-                        <small>下一张：{{ countDown }}</small>
-                    </div>
-                    <img class="thumb" :style="{'backgroundImage':nextPath}" />
-                </div>
-            </div>
-            <router-link :to="'/download'" class="topFuncBtn">资源下载</router-link>
-            <div class="topFuncBtn">
-                语言/言語/Language
+                Lan
                 <select>
                     <option value="zh">简体中文</option>
                     <option value="jp">日本語</option>
@@ -43,7 +34,7 @@
 /* eslint-disable */
 var appData = require('../../assets/wf.json'); 
 export default {
-    name: 'app',
+    name: 'wfapp',
     data(){
         return{
             debug: true,
@@ -114,7 +105,8 @@ export default {
     .naviSide {
         position: fixed;
         top: 50px;
-        width: 240px;
+        width: 12.5%;
+        min-width: 72px;
         height: 100%;
         overflow: hidden;
         background: white;
@@ -149,9 +141,9 @@ export default {
     }
 
     #mainBG {
-        //background-image: url(/static/images/still_unit_107731.png);
+        background-image: url(../../assets/top_kv_bg.png);
         background-size: cover;
-        background-position: right bottom;
+        //background-position: left top;
         background-repeat: no-repeat;
         position: fixed;
         z-index: -1;
@@ -164,7 +156,8 @@ export default {
     }
 
     .naviContent {
-        margin-left: 250px;
+        //margin-left: 240px;
+        margin-left: 12.5%;
         padding-top: 50px;
         transition: all .3s;
         z-index: 1000;
