@@ -77,8 +77,9 @@ export default {
                 return;
             }
             // 在时间内 检测session状态
-            var post = this.Func.GetPostObject('/user/session', {});
-            this.$http(post).then((response)=>{
+            //var post = this.Func.GetPostObject('/user/session', {});
+            //this.$http(post).then((response)=>{
+            this.$http.post('api/user/session').then((response)=>{
                 if(response.data == 'valid'){
                     // 直接设置已登录
                     //console.log(response.data);
@@ -92,8 +93,9 @@ export default {
             });
         },
         getUserInfo(){
-            var post = this.Func.GetPostObject('/user/info', {});
-            this.$http(post).then((response)=>{
+            //var post = this.Func.GetPostObject('/user/info', {});
+            //this.$http(post).then((response)=>{
+            this.$http.post('api/user/info').then((response)=>{
                 console.log(response.data);
                 // 设置用户信息
                 //this.user = response.data;
@@ -107,8 +109,9 @@ export default {
             }
             // 登陆验证
             var _this = this;
-            var post = this.Func.GetPostObject('/user/login', loginform);
-            this.$http(post).then((response)=>{
+            //var post = this.Func.GetPostObject('/user/login', loginform);
+            //this.$http(post).then((response)=>{
+            this.$http.post('api/user/login',loginform).then((response)=>{
                 // 成功登录
                 _this.loginDone();
             },(err)=>{
@@ -137,9 +140,10 @@ export default {
                 password: this.Func.cryptPwd(formdata.password)
             }
             // 注册
-            var post = this.Func.GetPostObject('/user/signup', signupform);
             var _this = this;
-            this.$http(post).then((response)=>{
+            // var post = this.Func.GetPostObject('/user/signup', signupform);
+            // this.$http(post).then((response)=>{
+            this.$http.post('api/user/signup',signupform).then((response)=>{
                 //console.log(response.data);
                 console.log('注册成功');
                 // 登录界面
@@ -148,8 +152,9 @@ export default {
         },
         logOut(){
             var _this = this;
-            var post = this.Func.GetPostObject('/user/logout',{});
-            this.$http(post).then((response)=>{
+            // var post = this.Func.GetPostObject('/user/logout',{});
+            // this.$http(post).then((response)=>{
+            this.$http.post('api/user/logout').then((response)=>{
                 _this.removeUserInfo();
             });
             //测试是否登出

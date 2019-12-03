@@ -1,5 +1,13 @@
 <template>
 <div class="fullScreen">
+    <div>
+        <span>设置服务器地址：</span>
+        <input v-model="debugip" type="textbox"/>
+        <span>UID</span>
+        <input v-model="userid" type="textbox"/>
+        <button @click="UploadSaveDev">上传存档</button>
+        <button @click="DownloadSaveDev">读取存档</button>
+    </div>
     <iframe ref="iframe" frameborder="no" border="0" marginwidth="0"
     marginheight="0" scrolling="no" width="100%" height="100%" :src="evolvegit"></iframe>
 </div>
@@ -13,8 +21,8 @@ export default {
     data(){
         return {
             debug: false,
-            //evolvegit: 'https://pmotschmann.github.io/Evolve',
-            //evolvegit: 'http://localhost/',
+            debugip: 'http://126.62.77.31:3000',
+            userid: 1,
             evolvegit: '/Evolve/',
             evolveWin: Object
         }
@@ -80,6 +88,34 @@ export default {
                     console.log(err);
                 });
             }
+        },
+        UploadSaveDev(){
+            console.log('uploading');
+            var save = localStorage.getItem('evolved');
+            var post = this.Func.GetPostObject(this.debugip+"/evolve/upload", { user: this.userid, savedata: save });
+            this.$http(post).then((response)=>{
+                console.log(response.data);
+                console.log('upload done');
+            },(err)=>{
+                // 未授权 需要登录
+                console.log(err);
+            });
+        },
+        DownloadSaveDev(){
+            var _this = this;
+            var get = this.Func.GetGetObject(this.debugip+"/evolve", this.userid);
+            this.$http(get).then((response)=>{
+                var save = response.data;
+                if(save === false){
+
+                }else{
+                    //console.log(save);
+                    _this.LoadGame(save.result);
+                }
+            },(err)=>{
+                // 未授权 需要登录
+                console.log(err);
+            });
         }
     },
     components:{

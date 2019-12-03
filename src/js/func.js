@@ -17,7 +17,7 @@ function GetApi(path){
 }
 
 function GetPostObject(url,data){
-    url = GetApi(url);
+    //url = GetApi(url);
     console.log(url);
     var options = {
         method: 'POST',
@@ -26,6 +26,23 @@ function GetPostObject(url,data){
             //'Content-Type': 'multipart/form-data',
             //'Access-Control-Allow-Origin': '*'
         },
+        withCredentials: false,
+        data: qs.stringify(data),
+        url
+    };
+    return options;
+}
+
+function GetGetObject(url,data){
+    //url = GetApi(url);
+    console.log(url);
+    var options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            //'Access-Control-Allow-Origin': '*'
+        },
+        withCredentials: false,
         data: qs.stringify(data),
         url
     };
@@ -46,5 +63,5 @@ function cryptPwd(password) {
 }
 
 export default {
-    ranBG, GetApi, GetPostObject, cryptPwd
+    ranBG, GetApi, GetPostObject,GetGetObject, cryptPwd
 }

@@ -71,7 +71,7 @@ export default {
                 }
             }
             if(Object.keys(keyarr).length==0) return true;
-            return ele.color in keyarr;
+            return (ele.color-1) in keyarr;
         },
         checkJob(ele){
             let keyarr = [];

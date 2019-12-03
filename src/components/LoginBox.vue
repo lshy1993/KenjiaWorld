@@ -43,8 +43,9 @@ export default {
         username(){
             // 查询是否已经被注册
             var data = { username: this.username };
-            var post = this.Func.GetPostObject('/user/usercheck',data);
-            this.$http(post).then((response)=>{
+            // var post = this.Func.GetPostObject('/user/usercheck',data);
+            // this.$http(post).then((response)=>{
+            this.$http.post('api/user/usercheck',data).then((response)=>{
                 console.log(response.data);
                 this.registerMode = response.data;
             });

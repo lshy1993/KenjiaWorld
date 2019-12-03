@@ -31,8 +31,8 @@
             </tr>
             <tr>
                 <td>
-                    <div class="subcol">属性：{{ charaData.color }}</div>
-                    <div class="subcol">职业：{{ charaData.cv }}</div>
+                    <div class="subcol">属性：{{ GetColor(charaData.color) }}</div>
+                    <div class="subcol">职业：{{ charaData.job }}</div>
                 </td>
             </tr>
             <tr>
@@ -93,6 +93,9 @@ export default {
         this.charaData = charajson[id];
     },
     methods:{
+        GetColor(i){
+            return ['火','水','雷','风','光','暗'][i-1];
+        }
     },
     components: {
     }
