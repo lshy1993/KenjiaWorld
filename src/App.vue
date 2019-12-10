@@ -8,7 +8,8 @@
                 <div v-if="!userLogined">
                     <div>登陆后可使用更多功能</div>
                     <div class="naviLine"></div>
-                    <div class="loginBtn" @click="showLoginBox">登录</div>
+                    <div v-if="serverOn" class="loginBtn" @click="showLoginBox">登录</div>
+                    <div v-if="!serverOn" class="loginBtn">服务器维护中</div>
                 </div>
                 <div v-if="userLogined">
                     <div>头像 用户信息</div>
@@ -39,6 +40,7 @@ export default {
             debug: true,
             loginOn: false,
             sideOn: false,
+            serverOn: false,
             user: {
                 userinfo: {},
                 logined: false
@@ -49,17 +51,24 @@ export default {
         userLogined(){
             return this.user.logined;
         },
-        // currentUser(){
-        //     return this.use.userinfo;
-        // },
     },
     created() {
         this.debug = process.env.NODE_ENV == 'development';
+        this.checkServer();
     },
     mounted(){
         this.initLoginStatus();
     },
     methods:{
+        checkServer(){
+            this.$http.get('api/check').then((response)=>{
+                console.log(response.data);
+                this.serverOn = response.data;
+            },(err)=>{
+                console.log(err);
+                this.serverOn = false;
+            });
+        },
         showLoginBox(){
             this.loginOn = !this.loginOn;
             document.body.classList = [this.loginOn?"hideScroll":""];

@@ -1,6 +1,6 @@
 <template>
 <div class="fullScreen">
-    <div>
+    <div v-if="false">
         <span>设置服务器地址：</span>
         <input v-model="debugip" type="textbox"/>
         <span>UID</span>
@@ -80,8 +80,7 @@ export default {
             var save = localStorage.getItem('evolved');
             if(this.userLogined){
                 console.log('uploading');
-                var post = this.Func.GetPostObject('/user/evolve/upload', { savedata: save });
-                this.$http(post).then((response)=>{
+                this.$http.post("/api/user/evolve/upload", { savedata: save } ).then((response)=>{
                     console.log(response.data);
                 },(err)=>{
                     // 未授权 需要登录

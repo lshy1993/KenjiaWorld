@@ -46,8 +46,10 @@ export default {
             // var post = this.Func.GetPostObject('/user/usercheck',data);
             // this.$http(post).then((response)=>{
             this.$http.post('api/user/usercheck',data).then((response)=>{
-                console.log(response.data);
                 this.registerMode = response.data;
+            },(err)=>{
+                console.log(err);
+                this.registerMode = false;
             });
         },
         password(){
