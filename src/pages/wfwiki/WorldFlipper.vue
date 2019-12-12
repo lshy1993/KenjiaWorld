@@ -5,7 +5,7 @@
         <div class="topFunction">
             <!--router-link :to="'/download'" class="topFuncBtn">资源下载</router-link-->
             <div class="topFuncBtn">
-                Lan
+                语言
                 <select>
                     <option value="zh">简体中文</option>
                     <option value="jp">日本語</option>
@@ -25,14 +25,18 @@
     </aside>
     <div class="naviContent">
         <div id="mainBG" ref="mainbg"/>
-        <router-view style="height:auto" ></router-view>
+        <audio src="/static/worldflipper_title.mp3" controls="true" loop="loop"/>
+        <transition name="fade">
+            <router-view style="height:auto" ></router-view>
+        </transition>
     </div>
+    
 </div>
 </template>
 
 <script>
 /* eslint-disable */
-var appData = require('../../assets/wf.json'); 
+var appData = require('../../assets/wf.json');
 export default {
     name: 'wfapp',
     data(){
@@ -42,6 +46,9 @@ export default {
             naviBtn: this.Common.naviBtn,
         }
     },
+    mounted(){
+        document.title = "WorldFlipperWiki";
+    }
 }
 </script>
 
@@ -163,10 +170,19 @@ export default {
         z-index: 1000;
     }
 
+    .flexcontainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
     // a.router-link-active.router-link-exact-active {
     //     color: white;
     // }
 
-
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s ease-out;
+    }
+    .fade-enter, .fade-leave-to{
+        opacity: 0;
+    }
 }
 </style>

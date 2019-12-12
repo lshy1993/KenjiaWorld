@@ -1,3 +1,6 @@
+//import nameData from '@/assets/wf2.json';
+import charajson from '@/assets/wf3.json';
+import equipjson from '@/assets/equip.json';
 var langs = [
     {
         locale: 'zh',
@@ -75,26 +78,26 @@ var naviBtn = [
         url: '',
         txt: "角色"
     },
-    {
-        to: "/wfwiki/story",
-        url: '',
-        txt: "故事"
-    },
-    {
-        to: "/wfwiki/quest",
-        url: '',
-        txt: "地图"
-    },
+    // {
+    //     to: "/wfwiki/story",
+    //     url: '',
+    //     txt: "故事"
+    // },
+    // {
+    //     to: "/wfwiki/quest",
+    //     url: '',
+    //     txt: "地图"
+    // },
     {
         to: "/wfwiki/equip",
         url: '',
         txt: "装备"
     },
-    {
-        to: "/wfwiki/mission",
-        url: '',
-        txt: "任务"
-    },
+    // {
+    //     to: "/wfwiki/mission",
+    //     url: '',
+    //     txt: "任务"
+    // },
     {
         to: "/wfwiki/kouryuaku",
         url: '',
@@ -107,11 +110,23 @@ var naviBtn = [
     }
 ]
 
+var wfData = {};
+for(var chara of charajson){
+    let n = chara.jname;
+    wfData[n] = chara;
+}
+var eqData = {};
+for(var equip of equipjson){
+    let n = equip.jname;
+    eqData[n] = equip;
+}
 
 export default{
     langs,
     topBoxList,
     sideJumpList,
     testList,
-    naviBtn
+    naviBtn,
+    wfData,
+    eqData
 }

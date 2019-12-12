@@ -1,7 +1,7 @@
 <template>
 <div class="filterBox">
     <div @click="filteron=!filteron" class="filterHead">过滤器</div>
-    <transition name="fade">
+    <transition name="toggle">
         <div v-show="filteron" style="overflow:hidden">
             <div class="filterLine">
                 <span>初始星级</span>
@@ -89,15 +89,6 @@ export default {
 </script>
 
 <style lang="scss">
-.fade-enter-active, .fade-leave-active {
-    transition: .5s;
-}
-.fade-enter, .fade-leave-to {
-    max-height: 0;
-}
-.fade-leave, .fade-enter-to {
-    max-height: 10vh;
-}
 .filterBox {
     box-shadow: 0 0 0.15em 0.15em rgba(0,0,0,.125);
     margin-bottom: 10px;
@@ -117,6 +108,16 @@ export default {
 
     .filterLine{
         padding: 10px;
+    }
+    
+    .toggle-enter-active, .toggle-leave-active {
+        transition: .5s;
+    }
+    .toggle-enter, .toggle-leave-to {
+        max-height: 0;
+    }
+    .toggle-leave, .toggle-enter-to {
+        max-height: 200px;
     }
 }
 

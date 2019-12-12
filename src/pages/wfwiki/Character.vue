@@ -6,8 +6,8 @@
         </div>
         <chara-filter v-on:filter="listenProps"/>
         <div class="clearfixbox"></div>
-        <transition-group name="flip-list" tag="div" class="container">
-            <chara-plate-img v-for="(ele,index) in charaShowDic" :key="ele.jname" :chara_id="index" :charaData="ele" />
+        <transition-group name="flip-list" tag="div" class="flexcontainer">
+            <chara-plate-img v-for="ele in charaShowDic" :key="ele.jname" :charaData="ele" />
         </transition-group>
     </div>
 </div>
@@ -15,7 +15,7 @@
 
 <script>
 /* eslint-disable */
-import charajson from '@/assets/wf.json'; 
+//import charajson from '@/assets/wf3.json'; 
 import CharaFilter from '@/components/CharaFilter.vue';
 import CharaPlateImg from '@/components/CharaPlateImg.vue';
 
@@ -28,14 +28,17 @@ export default {
                 star: [false,false,false,false,false],
                 job: [false,false,false,false,false],
                 type: [false,false,false,false,false]
-            },
+            }
         }
+    },
+    created(){
+
     },
     computed:{
         charaShowDic: function(){
             var result = [];
-            for(var key in charajson){
-                let ele = charajson[key];
+            for(var key in this.Common.wfData){
+                let ele = this.Common.wfData[key];
                 result.push(ele);
             }
             // 过滤星级
@@ -54,10 +57,9 @@ export default {
         },
         checkStar(ele){
             let keyarr = {};
-            var keys = ['★','★★','★★★','★★★★','★★★★★'];
             for(var i in this.filter.star){
                 if(this.filter.star[i]){
-                    keyarr[keys[i]] = "";
+                    keyarr[parseInt(i)+1] = "1";
                 }
             }
             if(Object.keys(keyarr).length==0) return true;
@@ -65,13 +67,14 @@ export default {
         },
         checkType(ele){
             let keyarr = {};
+            var keys = ['火','水','雷','风','光','暗'];
             for(var i in this.filter.type){
                 if(this.filter.type[i]){
-                    keyarr[i] = "";
+                    keyarr[keys[i]] = "";
                 }
             }
             if(Object.keys(keyarr).length==0) return true;
-            return (ele.color-1) in keyarr;
+            return ele.type in keyarr;
         },
         checkJob(ele){
             let keyarr = [];
@@ -82,7 +85,7 @@ export default {
                 }
             }
             if(Object.keys(keyarr).length==0) return true;
-            return ele.cv in keyarr;
+            return ele.job in keyarr;
         }
     },
     components: {
@@ -95,10 +98,5 @@ export default {
 <style lang="scss">
 #charaAlbum {
     //font-family: "Avenir", Helvetica, Arial, sans-serif;
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
 }
 </style>
