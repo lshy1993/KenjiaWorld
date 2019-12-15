@@ -99,9 +99,9 @@ var naviBtn = [
     //     txt: "任务"
     // },
     {
-        to: "/wfwiki/kouryuaku",
+        to: "/wfwiki/simulator",
         url: '',
-        txt: "攻略"
+        txt: "模拟器"
     },
     {
         to: "/wfwiki/about",
@@ -128,5 +128,5 @@ export default{
     testList,
     naviBtn,
     wfData,
-    eqData
+    eqData,
 }

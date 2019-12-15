@@ -1,13 +1,13 @@
 <template>
-<div id="charaAlbum" class="inset-container">
+<div id="equipAlbum" class="inset-container">
     <div class="section whitebox">
         <div class="sectionhead">
-            角色一览
+            装备一览
         </div>
-        <chara-filter v-on:filter="listenProps"/>
+        <equip-filter v-on:filter="listenProps"/>
         <div class="clearfixbox"></div>
         <transition-group name="flip-list" tag="div" class="flexcontainer">
-            <chara-plate-img v-for="ele in charaShowDic" :key="ele.jname" :charaData="ele" />
+            <equip-plate-img v-for="ele in equipShowDic" :key="ele.jname" :equipData="ele" @fatherclick="GetRouter" />
         </transition-group>
     </div>
 </div>
@@ -15,45 +15,42 @@
 
 <script>
 /* eslint-disable */
-//import charajson from '@/assets/wf3.json'; 
-import CharaFilter from '@/components/CharaFilter.vue';
-import CharaPlateImg from '@/components/CharaPlateImg.vue';
+import EquipFilter from '@/components/EquipFilter.vue';
+import EquipPlateImg from '@/components/EquipPlateImg.vue';
 
 export default {
-    name: 'wfchara',
+    name: 'wfequip',
     data(){
         return{
             debug: true,
             filter: {
                 star: [false,false,false,false,false],
-                job: [false,false,false,false,false],
                 type: [false,false,false,false,false]
             }
         }
     },
-    created(){
-
-    },
-    computed:{
-        charaShowDic: function(){
+    computed: {
+        equipShowDic: function(){
             var result = [];
-            for(var key in this.Common.wfData){
-                let ele = this.Common.wfData[key];
+            for(var key in this.Common.eqData){
+                let ele = this.Common.eqData[key];
                 result.push(ele);
             }
             // 过滤星级
             result = result.filter(this.checkStar);
             // 过滤属性
             result = result.filter(this.checkType);
-            // 过滤职业
-            result = result.filter(this.checkJob);
             return result;
         }
     },
     methods:{
         listenProps: function(childValue){
-            console.log('from child');
+            console.log('value changed from child');
             this.filter = childValue;
+        },
+        GetRouter(key){
+            console.log('children click');
+            this.$router.push('/wfwiki/equip/' + key);
         },
         checkStar(ele){
             let keyarr = {};
@@ -76,27 +73,17 @@ export default {
             if(Object.keys(keyarr).length==0) return true;
             return ele.type in keyarr;
         },
-        checkJob(ele){
-            let keyarr = [];
-            var keys = ['格斗','剑士','射击','辅助','特殊'];
-            for(var i in this.filter.job){
-                if(this.filter.job[i]){
-                    keyarr[keys[i]] = "";
-                }
-            }
-            if(Object.keys(keyarr).length==0) return true;
-            return ele.job in keyarr;
-        }
     },
     components: {
-        CharaFilter,
-        CharaPlateImg
+        EquipFilter,
+        EquipPlateImg
     }
 }
 </script>
 
 <style lang="scss">
-#charaAlbum {
+#equipAlbum {
     //font-family: "Avenir", Helvetica, Arial, sans-serif;
+
 }
 </style>

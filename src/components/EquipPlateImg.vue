@@ -1,5 +1,5 @@
 <template>
-<router-link tag="div" :class="['charaplate',hovered?colorclass:'']" :to="getrouter" @mouseover.native="hovered=true" @mouseleave.native="hovered=false">
+<div :class="['charaplate',hovered? 'color-'+colorclass:'']" :to="getrouter" @mouseover.native="hovered=true" @mouseleave.native="hovered=false" @click="clickevent">
     <div :class="['iconBorder', 'border-'+colorclass]">
         <img class="iconImg" style="width:100%" :src="iconurl" />
     </div>
@@ -9,7 +9,7 @@
     <div id="charanamediv">
         {{ equipData.jname }}
     </div>
-</router-link>
+</div>
 </template>
 
 <script>
@@ -36,7 +36,10 @@ export default {
         },
     },
     methods: {
-        
+        clickevent(){
+            console.log('emit to parent');
+            this.$emit('fatherclick', this.equipData.jname);
+        },
     }
 
 
@@ -70,25 +73,6 @@ export default {
         }
     }
 
-    &.red{
-        color: #a32535;
-    }
-    &.green{
-        color: #539722;
-    }
-    &.blue{
-        color: #2f60b2;
-    }
-    &.yellow{
-        color: #b29614;
-    }
-    &.light{
-        color: #abb283;
-    }
-    &.dark{
-        color: #3f2843;
-    }
-
     .iconBorder{
         width: 64px;
         height: 64px;
@@ -98,25 +82,6 @@ export default {
         box-sizing: border-box;
         transition: all 0.2s;
         overflow: hidden;
-
-        &.border-red{
-            border-color: #a32535;
-        }
-        &.border-green{
-            border-color: #539722;
-        }
-        &.border-blue{
-            border-color: #2f60b2;
-        }
-        &.border-yellow{
-            border-color: #b29614;
-        }
-        &.border-light{
-            border-color: #abb283;
-        }
-        &.border-dark{
-            border-color: #3f2843;
-        }
     }
 
     .pixelBorder{

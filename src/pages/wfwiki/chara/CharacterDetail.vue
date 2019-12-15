@@ -2,7 +2,7 @@
 <div class="inset-container">
     <div class="section whitebox">
         <div class="sectionhead">
-            <router-link :to="'/wfwiki'">角色一览</router-link>/{{ charaData.jname }}
+            <router-link :to="'/wfwiki/chara'">角色一览</router-link>/{{ charaData.jname }}
         </div>
         <div class="charaContent">
             <div class="avatarBox">
@@ -29,8 +29,8 @@
                     <div class="tcell wid100">{{ charaData.sex }}</div>
                 </div>
                 <div class="trow">
-                    <div :class="['thead',GetColor(charaData.type)]">属性</div>
-                    <div :class="['tcell','wid100',GetColor(charaData.type)]">{{ charaData.type }}</div>
+                    <div :class="['thead','back-'+GetColor(charaData.type)]">属性</div>
+                    <div :class="['tcell','wid100','color-'+GetColor(charaData.type)]">{{ charaData.type }}</div>
                     <div class="thead">职业</div>
                     <div class="tcell wid100">{{ charaData.job }}</div>
                 </div>
@@ -158,25 +158,6 @@ export default {
             text-align: center;
             margin-bottom: 6px;
             padding-top: 1px;
-
-            &.red{
-                background-color: #a32535;
-            }
-            &.green{
-                background-color: #539722;
-            }
-            &.blue{
-                background-color: #2f60b2;
-            }
-            &.yellow{
-                background-color: #b29614;
-            }
-            &.light{
-                background-color: #abb283;
-            }
-            &.dark{
-                background-color: #3f2843;
-            }
         }
         .tcell{
             display: inline-block;
@@ -188,24 +169,6 @@ export default {
 
             &.wid100{
                 width: 120px;
-            }
-            &.red{
-                color: #a32535;
-            }
-            &.green{
-                color: #539722;
-            }
-            &.blue{
-                color: #2f60b2;
-            }
-            &.yellow{
-                color: #b29614;
-            }
-            &.light{
-                color: #abb283;
-            }
-            &.dark{
-                color: #3f2843;
             }
         }
         

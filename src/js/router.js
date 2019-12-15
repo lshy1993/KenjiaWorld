@@ -22,11 +22,13 @@ export default new Router({
       name: 'worldflipper',
       component: ()=> import('../pages/wfwiki/WorldFlipper.vue'),
       children:[
-        { path:'', component: ()=>import('../pages/wfwiki/Character.vue') },
-        { path:'chara', component: ()=>import('../pages/wfwiki/Character.vue') },
+        { path:'', component: ()=>import('../pages/wfwiki/Index.vue') },
+        { path:'chara', component: ()=>import('../pages/wfwiki/chara/Character.vue') },
         { path:'chara/:id', name: 'chara', component: ()=>import('../pages/wfwiki/chara/CharacterDetail.vue') },
-        { path:'equip', component: ()=>import('../pages/wfwiki/Equipment.vue') },
+        { path:'equip', component: ()=>import('../pages/wfwiki/equip/Equipment.vue') },
         { path:'equip/:id', name: 'equip', component: ()=>import('../pages/wfwiki/equip/EquipmentDetail.vue') },
+        { path:'simulator', component: ()=>import('../pages/wfwiki/simulator/Simulate.vue') },
+        { path:'simulator/:id', name: 'simulator', component: ()=>import('../pages/wfwiki/simulator/Simulate.vue') },
         { path:'*', component: ()=>import('../pages/wfwiki/Building.vue') },
       ]
     },

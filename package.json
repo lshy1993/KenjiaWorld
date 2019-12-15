@@ -12,6 +12,7 @@
     "babel-loader": "^8.0.6",
     "core-js": "^2.6.10",
     "css-loader": "^3.2.1",
+    "lz-string": "^1.4.4",
     "style-loader": "^1.0.1",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",

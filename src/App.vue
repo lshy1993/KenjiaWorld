@@ -63,7 +63,9 @@ export default {
         checkServer(){
             this.$http.get('api/check').then((response)=>{
                 console.log(response.data);
-                this.serverOn = response.data;
+                if(response.data === true){
+                    this.serverOn = true;
+                }
             },(err)=>{
                 console.log(err);
                 this.serverOn = false;
@@ -89,7 +91,7 @@ export default {
             //var post = this.Func.GetPostObject('/user/session', {});
             //this.$http(post).then((response)=>{
             this.$http.post('api/user/session').then((response)=>{
-                if(response.data == 'valid'){
+                if(response.data === 'valid'){
                     // 直接设置已登录
                     //console.log(response.data);
                     this.openUserPanel();

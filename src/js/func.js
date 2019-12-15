@@ -62,6 +62,92 @@ function cryptPwd(password) {
     return result;
 }
 
+function FilterCharaDic(wfData,filter){
+    var result = [];
+    for(var key in wfData){
+        let ele = wfData[key];
+        result.push(ele);
+    }
+
+    function checkStar(ele){
+        let keyarr = {};
+        for(var i in filter.star){
+            if(filter.star[i]){
+                keyarr[parseInt(i)+1] = "1";
+            }
+        }
+        if(Object.keys(keyarr).length==0) return true;
+        return ele.rare in keyarr;
+    }
+    function checkType(ele){
+        let keyarr = {};
+        var keys = ['火','水','雷','风','光','暗'];
+        for(var i in filter.type){
+            if(filter.type[i]){
+                keyarr[keys[i]] = "";
+            }
+        }
+        if(Object.keys(keyarr).length==0) return true;
+        return ele.type in keyarr;
+    }
+    function checkJob(ele){
+        let keyarr = [];
+        var keys = ['格斗','剑士','射击','辅助','特殊'];
+        for(var i in filter.job){
+            if(filter.job[i]){
+                keyarr[keys[i]] = "";
+            }
+        }
+        if(Object.keys(keyarr).length==0) return true;
+        return ele.job in keyarr;
+    }
+
+    // 过滤星级
+    result = result.filter(checkStar);
+    // 过滤属性
+    result = result.filter(checkType);
+    // 过滤职业
+    result = result.filter(checkJob);
+    return result;
+}
+
+function FilterEquipDic(eqData,filter){
+    var result = [];
+    for(var key in eqData){
+        let ele = eqData[key];
+        result.push(ele);
+    }
+
+    function checkStar(ele){
+        let keyarr = {};
+        for(var i in filter.star){
+            if(filter.star[i]){
+                keyarr[parseInt(i)+1] = "1";
+            }
+        }
+        if(Object.keys(keyarr).length==0) return true;
+        return ele.rare in keyarr;
+    }
+    function checkType(ele){
+        let keyarr = {};
+        var keys = ['火','水','雷','风','光','暗'];
+        for(var i in filter.type){
+            if(filter.type[i]){
+                keyarr[keys[i]] = "";
+            }
+        }
+        if(Object.keys(keyarr).length==0) return true;
+        return ele.type in keyarr;
+    }
+
+    // 过滤星级
+    result = result.filter(checkStar);
+    // 过滤属性
+    result = result.filter(checkType);
+    return result;
+}
+
 export default {
-    ranBG, GetApi, GetPostObject,GetGetObject, cryptPwd
+    ranBG, GetApi, GetPostObject,GetGetObject, cryptPwd,
+    FilterCharaDic, FilterEquipDic
 }

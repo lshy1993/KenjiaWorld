@@ -70,7 +70,7 @@ export default {
     },
     watch:{
         filter: function(){
-            //console.log('aaa');
+            console.log('filter changed');
             this.$emit('filter', this.filter);
         }
     },
@@ -83,7 +83,7 @@ export default {
         },
         clearJob(){
             this.filter.job = [false,false,false,false,false];
-        }
+        },
     }
 }
 </script>

@@ -40,14 +40,14 @@
 
 <script>
 export default {
-    name: 'CharaFilter',
+    name: 'EquipFilter',
     data(){
         return {
             filteron: true,
             filter: {
                 star: [false,false,false,false,false],
-                job: [false,false,false,false,false],
-                type: [false,false,false,false,false]
+                type: [false,false,false,false,false],
+                //job: [false,false,false,false,false],
             }
         }
     },

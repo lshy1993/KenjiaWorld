@@ -25,9 +25,9 @@
     </aside>
     <div class="naviContent">
         <div id="mainBG" ref="mainbg"/>
-        <audio src="/static/worldflipper_title.mp3" controls="true" loop="loop"/>
+        <audio ref="wfAudio" src="/static/worldflipper_title.mp3" loop="loop"/>
         <transition name="fade">
-            <router-view style="height:auto" ></router-view>
+            <router-view style="height:auto;" @playAudio="playBGM" ></router-view>
         </transition>
     </div>
     
@@ -41,13 +41,27 @@ export default {
     name: 'wfapp',
     data(){
         return{
-            debug: true,
+            audioPlaying: false,
             appData,
             naviBtn: this.Common.naviBtn,
         }
     },
-    mounted(){
+    created(){
         document.title = "WorldFlipperWiki";
+    },
+    methods:{
+        playBGM(){
+            if(!this.audioPlaying){
+                console.log('play');
+                this.audioPlaying = true;
+                this.$refs.wfAudio.play();
+            }else{
+                console.log('pause');
+                this.audioPlaying = false;
+                this.$refs.wfAudio.pause();
+            }
+            
+        }
     }
 }
 </script>
@@ -174,9 +188,67 @@ export default {
         display: flex;
         flex-wrap: wrap;
     }
+
     // a.router-link-active.router-link-exact-active {
     //     color: white;
     // }
+
+    .color-red{
+        color: #a32535;
+    }
+    .color-green{
+        color: #539722;
+    }
+    .color-blue{
+        color: #2f60b2;
+    }
+    .color-yellow{
+        color: #b29614;
+    }
+    .color-light{
+        color: #abb283;
+    }
+    .color-dark{
+        color: #3f2843;
+    }
+
+    .border-red{
+        border-color: #a32535;
+    }
+    .border-green{
+        border-color: #539722;
+    }
+    .border-blue{
+        border-color: #2f60b2;
+    }
+    .border-yellow{
+        border-color: #b29614;
+    }
+    .border-light{
+        border-color: #abb283;
+    }
+    .border-dark{
+        border-color: #3f2843;
+    }
+    
+    .back-red{
+        background-color: #a32535;
+    }
+    .back-green{
+        background-color: #539722;
+    }
+    .back-blue{
+        background-color: #2f60b2;
+    }
+    .back-yellow{
+        background-color: #b29614;
+    }
+    .back-light{
+        background-color: #abb283;
+    }
+    .back-dark{
+        background-color: #3f2843;
+    }
 
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s ease-out;

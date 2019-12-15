@@ -1,5 +1,5 @@
 <template>
-<router-link tag="div" :class="['charaplate',hovered?colorclass:'']" :to="getrouter" @mouseover.native="hovered=true" @mouseleave.native="hovered=false">
+<div :class="['charaplate',hovered?'color-'+colorclass:'']" @mouseover="hovered=true" @mouseleave="hovered=false" @click="clickevent">
     <div :class="['iconBorder', 'border-'+colorclass]">
         <img class="iconImg" style="width:100%" :src="iconurl" />
     </div>
@@ -13,7 +13,7 @@
     <div id="charanamediv">
         {{ charaData.jname }}
     </div>
-</router-link>
+</div>
 </template>
 
 <script>
@@ -39,16 +39,15 @@ export default {
             var tt = {'火':'red','雷':'yellow','水':'blue','风':'green','暗':'dark','光':'light'};
             return tt[this.charaData.type];
         },
-        getrouter: function(){
-            return '/wfwiki/chara/' + this.charaData.jname;
-            //return '/wfwiki/chara/' + this.chara_id;
-        },
         charaName: function(){
             return this.charaData.jname;
         },
     },
     methods: {
-        
+        clickevent(){
+            console.log('click');
+            this.$emit('fatherclick', this.charaData.jname);
+        },
     }
 
 
@@ -82,25 +81,6 @@ export default {
         }
     }
 
-    &.red{
-        color: #a32535;
-    }
-    &.green{
-        color: #539722;
-    }
-    &.blue{
-        color: #2f60b2;
-    }
-    &.yellow{
-        color: #b29614;
-    }
-    &.light{
-        color: #abb283;
-    }
-    &.dark{
-        color: #3f2843;
-    }
-
     .iconBorder{
         width: 64px;
         height: 64px;
@@ -110,25 +90,6 @@ export default {
         box-sizing: border-box;
         transition: all 0.2s;
         overflow: hidden;
-
-        &.border-red{
-            border-color: #a32535;
-        }
-        &.border-green{
-            border-color: #539722;
-        }
-        &.border-blue{
-            border-color: #2f60b2;
-        }
-        &.border-yellow{
-            border-color: #b29614;
-        }
-        &.border-light{
-            border-color: #abb283;
-        }
-        &.border-dark{
-            border-color: #3f2843;
-        }
     }
 
     .pixelBorder{

@@ -21,8 +21,8 @@
                 </div>
                 <div class="thead" style="width:100%;" @mouseover="hovered=true" @mouseleave="hovered=false">{{ (hovered?'MAX':'INIT')+' / HOVER TO CHANGE' }}</div>
                 <div class="trow">
-                    <div :class="['thead',GetColor(equipData.type)]">属性</div>
-                    <div :class="['tcell','wid100',GetColor(equipData.type)]">{{ equipData.type }}</div>
+                    <div :class="['thead','back-'+GetColor(equipData.type)]">属性</div>
+                    <div :class="['tcell','wid100','color-'+GetColor(equipData.type)]">{{ equipData.type }}</div>
                     <div class="thead">入手方法</div>
                     <div class="tcell">{{ equipData.get }}</div>
                 </div>
@@ -140,25 +140,6 @@ export default {
             text-align: center;
             margin-bottom: 6px;
             padding-top: 1px;
-
-            &.red{
-                background-color: #a32535;
-            }
-            &.green{
-                background-color: #539722;
-            }
-            &.blue{
-                background-color: #2f60b2;
-            }
-            &.yellow{
-                background-color: #b29614;
-            }
-            &.light{
-                background-color: #abb283;
-            }
-            &.dark{
-                background-color: #3f2843;
-            }
         }
         .tcell{
             display: inline-block;
@@ -170,24 +151,6 @@ export default {
 
             &.wid100{
                 width: 120px;
-            }
-            &.red{
-                color: #a32535;
-            }
-            &.green{
-                color: #539722;
-            }
-            &.blue{
-                color: #2f60b2;
-            }
-            &.yellow{
-                color: #b29614;
-            }
-            &.light{
-                color: #abb283;
-            }
-            &.dark{
-                color: #3f2843;
             }
         }
         
