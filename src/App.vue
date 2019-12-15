@@ -61,7 +61,8 @@ export default {
     },
     methods:{
         checkServer(){
-            this.$http.get('api/check').then((response)=>{
+            let url = this.Func.GetApi('/check');
+            this.$http.get(url).then((response)=>{
                 console.log(response.data);
                 if(response.data === true){
                     this.serverOn = true;
@@ -89,8 +90,9 @@ export default {
             }
             // 在时间内 检测session状态
             //var post = this.Func.GetPostObject('/user/session', {});
-            //this.$http(post).then((response)=>{
-            this.$http.post('api/user/session').then((response)=>{
+            //this.$http(post).then((response)=>
+            let url = this.Func.GetApi('/user/session')
+            this.$http.post(url).then((response)=>{
                 if(response.data === 'valid'){
                     // 直接设置已登录
                     //console.log(response.data);
@@ -106,7 +108,8 @@ export default {
         getUserInfo(){
             //var post = this.Func.GetPostObject('/user/info', {});
             //this.$http(post).then((response)=>{
-            this.$http.post('api/user/info').then((response)=>{
+            let url = this.Func.GetApi('/user/info')
+            this.$http.post(url).then((response)=>{
                 console.log(response.data);
                 // 设置用户信息
                 //this.user = response.data;
@@ -154,7 +157,8 @@ export default {
             var _this = this;
             // var post = this.Func.GetPostObject('/user/signup', signupform);
             // this.$http(post).then((response)=>{
-            this.$http.post('api/user/signup',signupform).then((response)=>{
+            let url = this.Func.GetApi('/user/signup')
+            this.$http.post(url,signupform).then((response)=>{
                 //console.log(response.data);
                 console.log('注册成功');
                 // 登录界面
@@ -165,7 +169,8 @@ export default {
             var _this = this;
             // var post = this.Func.GetPostObject('/user/logout',{});
             // this.$http(post).then((response)=>{
-            this.$http.post('api/user/logout').then((response)=>{
+            let url = this.Func.GetApi('/user/logout')
+            this.$http.post(url).then((response)=>{
                 _this.removeUserInfo();
             });
             //测试是否登出

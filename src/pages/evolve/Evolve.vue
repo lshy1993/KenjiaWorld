@@ -57,7 +57,8 @@ export default {
             }
             // 获取存档
             var _this = this;
-            this.$http.get("/api/user/evolve").then((response)=>{
+            let url = this.Func.GetApi('/user/evolve')
+            this.$http.get(url).then((response)=>{
                 var save = response.data;
                 if(save === false){
 
@@ -80,7 +81,8 @@ export default {
             var save = localStorage.getItem('evolved');
             if(this.userLogined){
                 console.log('uploading');
-                this.$http.post("/api/user/evolve/upload", { savedata: save } ).then((response)=>{
+                let url = this.Func.GetApi('/user/evolve/upload');
+                this.$http.post(url, { savedata: save } ).then((response)=>{
                     console.log(response.data);
                 },(err)=>{
                     // 未授权 需要登录

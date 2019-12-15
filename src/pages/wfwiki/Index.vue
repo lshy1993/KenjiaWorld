@@ -18,20 +18,20 @@
             </div>
             <div class="rightcontent">
                 <div class="thead">TODAY</div>
-                <div v-if="cday==0 || cday==1" class="banner">
-                    <img src="@/assets/banner_light.png" />
-                </div>
                 <div v-if="cday==0 || cday==2" class="banner">
                     <img src="@/assets/banner_red.png" />
                 </div>
                 <div v-if="cday==0 || cday==3" class="banner">
                     <img src="@/assets/banner_blue.png" />
                 </div>
+                <div v-if="cday==0 || cday==5" class="banner">
+                    <img src="@/assets/banner_yellow.png" />
+                </div>
                 <div v-if="cday==0 || cday==4" class="banner">
                     <img src="@/assets/banner_green.png" />
                 </div>
-                <div v-if="cday==0 || cday==5" class="banner">
-                    <img src="@/assets/banner_yellow.png" />
+                <div v-if="cday==0 || cday==1" class="banner">
+                    <img src="@/assets/banner_light.png" />
                 </div>
                 <div v-if="cday==0 || cday==6" class="banner">
                     <img src="@/assets/banner_dark.png" />
